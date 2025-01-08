@@ -48,24 +48,18 @@ Route::get('/orders/{orderNumber}/pdf', function ($orderNumber) {
     return $pdf->stream("order-{$orderNumber}.pdf");
 });
 
-Route::post('/orders/{orderNumber}/labels', function (Request $request, $orderNumber) {
+Route::get('/orders/{orderNumber}/labels', function (Request $request, $orderNumber) {
     // Validate the input
     $request->validate([
-        'colli' => 'required|integer|min:1', // Ensure 'colli' is provided and is a positive integer
+        'colli' => 'required|integer|min:1',
     ]);
 
-   // dd($request->all());
-    // Create the DHL API instance
     $api = new Api(
         'ee0e144f-5d23-400f-83bb-579977d4cb93',
         '4fcab3b2-e279-482c-8d9f-811990ed4117',
         'https://api-gw.dhlparcel.nl'
     );
 
-    $trackAndTrace = null;
-    $ids = [];
-
-    // Fetch the order from the database
     $order = Order::where('id', $orderNumber)->first();
 
     if (!$order) {
@@ -73,40 +67,31 @@ Route::post('/orders/{orderNumber}/labels', function (Request $request, $orderNu
     }
 
     try {
-        // Generate labels and retrieve label IDs and the tracking number
+        $ids = [];
+        $trackAndTrace = null;
+
+        // Generate labels
         for ($i = 0; $i < $request->colli; $i++) {
             $label = $api->createLabel($order, $i, $request->colli);
             $label = json_decode($label->getBody()->getContents());
-
             $ids[] = $label->labelId;
 
-            // Store the tracking number from the first label
             if ($i === 0) {
                 $trackAndTrace = $label->trackerCode;
             }
         }
 
-        // Retrieve the labels as a PDF
+        // Fetch the labels as a PDF
         $response = $api->getLabelPdf($ids);
 
-        // Save the PDF to storage (optional)
+        // Stream the PDF directly
+        $pdfContent = $response->getBody()->getContents();
         $fileName = sprintf('labels-%s.pdf', $order->id);
-        $filePath = 'public/pdf/labels/' . $fileName;
-        Storage::put($filePath, $response->getBody()->getContents());
 
-        // Return the tracking number and label download URL
-        $relativePath = 'pdf/labels/' . $fileName;
-        $absolutePath = Storage::disk('public')->url($relativePath);
+        return response($pdfContent)
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', "inline; filename={$fileName}");
 
-        $order->status = 'completed';
-        $order->trackingcode = $trackAndTrace;
-        $order->save();
-
-        return response()->json([
-            'message' => 'Labels retrieved successfully.',
-            'tracking_number' => $trackAndTrace,
-            'label_url' => $absolutePath,
-        ]);
     } catch (\Exception $e) {
         return response()->json(['message' => 'An error occurred: ' . $e->getMessage()], 500);
     }

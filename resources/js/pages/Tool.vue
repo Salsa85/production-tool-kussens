@@ -98,13 +98,9 @@ export default {
             }
 
             try {
-                const response = await Nova.request().post(
-                    `/nova-vendor/production/orders/${this.order.id}/labels`,
-                    { colli: this.colli }
-                );
-
-                const { label_url } = response.data;
-                window.open(label_url, '_blank');
+                // Stream the label directly, similar to the package slip
+                const url = `/nova-vendor/production/orders/${this.order.id}/labels?colli=${this.colli}`;
+                window.open(url, '_blank');
             } catch (error) {
                 this.errorMessage =
                     error.response?.data?.message || 'Fout bij het ophalen van labels.';
