@@ -88,6 +88,10 @@ Route::get('/orders/{orderNumber}/labels', function (Request $request, $orderNum
         $pdfContent = $response->getBody()->getContents();
         $fileName = sprintf('labels-%s.pdf', $order->id);
 
+        // set status to completed
+        $order->status = 'completed';
+        $order->save();
+
         return response($pdfContent)
             ->header('Content-Type', 'application/pdf')
             ->header('Content-Disposition', "inline; filename={$fileName}");
