@@ -18,6 +18,8 @@
                     class="form-control text-xl px-4 py-3 w-full border rounded focus:ring focus:ring-blue-300"
                     :class="{ 'bg-green-500 text-white': order }"
                     placeholder="Voer een ordernummer in"
+                    @input="resetValues"
+
                 />
             </div>
 
@@ -44,9 +46,13 @@
                     placeholder="Aantal colli"
                 />
                 <div class="flex gap-4">
-                    <button class="btn-secondary text-xl" @click="printLabel">Print Label</button>
+                    <button v-if="shipping !== 'pickup'" class="btn-secondary text-xl" @click="printLabel">Print Label</button>
                     <button class="btn-secondary text-xl" @click="printPakbon">Print Pakbon</button>
                 </div>
+            </div>
+
+            <div v-if="shipping === 'pickup'">
+                <strong class="bg-red-100 border-2 border-red-200 p-2 text-2xl text-red-500 font-bold">Let op: Dit is een afhaal order!</strong>
             </div>
 
             <!-- No Order Found -->
@@ -67,6 +73,7 @@ export default {
             loading: false,
             searched: false,
             colli: 1,
+            shipping: null,
         };
     },
     methods: {
@@ -81,6 +88,10 @@ export default {
                     `/nova-vendor/production/orders/${this.orderNumber}`
                 );
                 this.order = response.data.order;
+
+                // set this shipping to the this.order.shipping value
+                this.shipping = this.order.shipping;
+
             } catch (error) {
                 this.errorMessage =
                     error.response?.status === 404
@@ -113,6 +124,14 @@ export default {
             } else {
                 this.errorMessage = 'Order niet gevonden.';
             }
+        },
+
+        resetValues() {
+            this.order = null;
+            this.errorMessage = '';
+            this.searched = false;
+            this.colli = 1;
+            this.shipping = null;
         },
     },
 };
