@@ -90,6 +90,8 @@ Route::get('/orders/{orderNumber}/labels', function (Request $request, $orderNum
 
         // set status to completed
         $order->status = 'completed';
+        // save track and trace to order
+        $order->trackingcode = $trackAndTrace;
         $order->save();
 
         return response($pdfContent)
