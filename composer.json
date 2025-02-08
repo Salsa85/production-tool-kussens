@@ -36,7 +36,7 @@
         },
         {
             "type": "vcs",
-            "url": "https://github.com/Salsa85/production-tool-kussens"
+            "url": "https://github.com/Salsa85/production-tool-kussens.git"
         }
     ]
 }
