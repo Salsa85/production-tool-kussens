@@ -55,8 +55,8 @@ Route::get('/orders/{orderNumber}/labels', function (Request $request, $orderNum
     ]);
 
     $api = new Api(
-        'ee0e144f-5d23-400f-83bb-579977d4cb93',
-        '4fcab3b2-e279-482c-8d9f-811990ed4117',
+        'bda6d4eb-3f53-4199-aa45-5959b6b70910',
+        '6aa2da38-612f-422f-a72e-50704cb6aa41',
         'https://api-gw.dhlparcel.nl'
     );
 
