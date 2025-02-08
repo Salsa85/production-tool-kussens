@@ -1,8 +1,9 @@
 <?php
 
 return [
-    'api_codes' => [
-        'default' => env('PRODUCTION_API_CODE', ''),
-        // Add other API codes as needed
+    'api' => [
+        'code' => env('PRODUCTION_API_CODE', ''),
+        'user_key' => env('PRODUCTION_USER_KEY', ''),
+        'base_url' => env('PRODUCTION_API_URL', 'https://api-gw.dhlparcel.nl'),
     ]
 ]; 
