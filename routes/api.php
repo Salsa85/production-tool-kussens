@@ -54,6 +54,8 @@ Route::get('/orders/{orderNumber}/labels', function (Request $request, $orderNum
         'colli' => 'required|integer|min:1',
     ]);
 
+    $apiCode = config('production.api_codes.default');
+
     $api = new Api(
         'ee0e144f-5d23-400f-83bb-579977d4cb93',
         '4fcab3b2-e279-482c-8d9f-811990ed4117',

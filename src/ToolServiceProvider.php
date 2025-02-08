@@ -31,6 +31,9 @@ class ToolServiceProvider extends ServiceProvider
             //
         });
 
+        $this->publishes([
+            __DIR__.'/../config/production.php' => config_path('production.php'),
+        ], 'production-config');
     }
 
     /**
@@ -59,6 +62,8 @@ class ToolServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/production.php', 'production'
+        );
     }
 }
