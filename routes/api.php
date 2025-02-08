@@ -55,9 +55,9 @@ Route::get('/orders/{orderNumber}/labels', function (Request $request, $orderNum
     ]);
 
     $api = new Api(
-        config('production.api.code'),
-        config('production.api.user_key'),
-        config('production.api.base_url')
+        'ee0e144f-5d23-400f-83bb-579977d4cb93',
+        '4fcab3b2-e279-482c-8d9f-811990ed4117',
+        'https://api-gw.dhlparcel.nl'
     );
 
     $order = Order::where('id', $orderNumber)->first();
