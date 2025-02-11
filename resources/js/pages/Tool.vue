@@ -94,7 +94,7 @@ export default {
             this.errorMessage = '';
             this.searched = false;
             this.order = null;
-
+            alert('test');
             try {
                 const response = await Nova.request().get(
                     `/nova-vendor/production/orders/${this.orderNumber}`
