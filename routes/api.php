@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
- Route::get('/orders/{orderNumber}', function ($orderNumber) {
+Route::get('/orders/{orderNumber}', function ($orderNumber) {
     $order = Order::where('id', $orderNumber)->first();
 
     if (!$order) {
@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Storage;
     return response()->json([
         'order' => $order,
     ]);
- });
+});
 
 Route::get('/orders/{orderNumber}/pdf', function ($orderNumber) {
     $order = Order::where('id', $orderNumber)->first();
