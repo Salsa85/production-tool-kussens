@@ -48,7 +48,7 @@
 
                 <div class="flex gap-4">
                     <button 
-                        v-if="order && order.shipping !== 'pickup'" 
+                        v-if="order && order.shipping_method !== 'pickup'" 
                         class="btn-secondary text-xl" 
                         @click="printLabel"
                     >
@@ -63,7 +63,7 @@
                 </div>
             </div>
 
-            <div v-if="shipping === 'pickup'">
+            <div v-if="order && order.shipping_method === 'pickup'">
                 <strong class="bg-red-100 border-2 border-red-200 p-2 text-2xl text-red-500 font-bold">Let op: Dit is een afhaal order!</strong>
             </div>
 
@@ -102,7 +102,7 @@ export default {
                 this.order = response.data.order;
 
                 // set this shipping to the this.order.shipping value
-                this.shipping = this.order.shipping;
+                this.shipping_method = this.order.shipping_method;
 
             } catch (error) {
                 this.errorMessage =
@@ -144,7 +144,7 @@ export default {
             this.errorMessage = '';
             this.searched = false;
             this.colli = 1;
-            this.shipping = null;
+            this.shipping_method = null;
         },
     },
 };
