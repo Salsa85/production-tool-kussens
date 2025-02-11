@@ -42,8 +42,12 @@
                         Shipping Method: {{ order.shipping_method }}
                     </p>
                     <p class="text-sm font-mono">
-                        Raw Order Data: {{ JSON.stringify(order, null, 2) }}
+                        Is Pickup?: {{ order.shipping_method === 'pickup' ? 'Yes' : 'No' }}
                     </p>
+                    <p class="text-sm font-mono">
+                        Show Label Button?: {{ order.shipping_method !== 'pickup' ? 'Yes' : 'No' }}
+                    </p>
+                    <pre class="text-sm font-mono mt-2">{{ order }}</pre>
                 </div>
 
                 <label for="colli" class="block text-gray-700 font-bold mb-2">Aantal colli:</label>
@@ -58,7 +62,7 @@
 
                 <div class="flex gap-4">
                     <button 
-                        v-if="order && order.shipping_method !== 'pickup'" 
+                        v-if="order.shipping_method === 'shipping'"
                         class="btn-secondary text-xl" 
                         @click="printLabel"
                     >
@@ -73,7 +77,7 @@
                 </div>
             </div>
 
-            <div v-if="order && order.shipping_method === 'pickup'">
+            <div v-if="order && order.shipping_method === 'pickup'" class="mt-4">
                 <strong class="bg-red-100 border-2 border-red-200 p-2 text-2xl text-red-500 font-bold">Let op: Dit is een afhaal order!</strong>
             </div>
 
@@ -95,7 +99,6 @@ export default {
             loading: false,
             searched: false,
             colli: 1,
-            shipping_method: null,
         };
     },
     methods: {
@@ -110,11 +113,10 @@ export default {
                     `/nova-vendor/production/orders/${this.orderNumber}`
                 );
                 this.order = response.data.order;
-
-                // set this shipping to the this.order.shipping value
-                this.shipping_method = this.order.shipping_method;
+                console.log('Fetched order:', this.order);
 
             } catch (error) {
+                console.error('Error fetching order:', error);
                 this.errorMessage =
                     error.response?.status === 404
                         ? 'Geen order gevonden.'
@@ -154,7 +156,6 @@ export default {
             this.errorMessage = '';
             this.searched = false;
             this.colli = 1;
-            this.shipping_method = null;
         },
     },
 };
