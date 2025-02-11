@@ -1,7 +1,7 @@
 <template>
     <div class="p-6 bg-gray-100 min-h-screen">
         <Head title="Production" />
-test
+
         <Card class="p-8 max-w-4xl mx-auto bg-white shadow-md rounded-lg">
             <!-- Page Title -->
             <h1 class="text-3xl font-semibold text-gray-800 mb-6">Productie Dashboard</h1>
@@ -36,19 +36,6 @@ test
 
             <!-- Order Found Section -->
             <div v-if="order" class="border-t py-6">
-                <!-- Debug information -->
-                <div class="mb-4 p-4 bg-gray-100 rounded">
-                    <p class="text-sm font-mono">
-                        Shipping Method: {{ order.shipping_method }}
-                    </p>
-                    <p class="text-sm font-mono">
-                        Is Pickup?: {{ order.shipping_method === 'pickup' ? 'Yes' : 'No' }}
-                    </p>
-                    <p class="text-sm font-mono">
-                        Show Label Button?: {{ order.shipping_method !== 'pickup' ? 'Yes' : 'No' }}
-                    </p>
-                    <pre class="text-sm font-mono mt-2">{{ order }}</pre>
-                </div>
 
                 <label for="colli" class="block text-gray-700 font-bold mb-2">Aantal colli:</label>
                 <input
