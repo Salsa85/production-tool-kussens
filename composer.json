@@ -31,12 +31,8 @@
     "prefer-stable": true,
     "repositories": [
         {
-            "type": "composer",
-            "url": "https://nova.laravel.com"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/Salsa85/production-tool-kussens.git"
+            "type": "path",
+            "url": "./nova-components/production"
         }
     ]
 }

@@ -28,6 +28,13 @@ Route::get('/orders/{orderNumber}', function ($orderNumber) {
         ], 404);
     }
 
+    // Add debug logging
+    \Log::info('Order fetched:', [
+        'order_id' => $order->id,
+        'shipping_method' => $order->shipping_method,
+        'raw_order' => $order->toArray()
+    ]);
+
     return response()->json([
         'order' => $order,
     ]);
