@@ -1,7 +1,7 @@
 <template>
     <div class="p-6 bg-gray-100 min-h-screen">
         <Head title="Production" />
-
+test
         <Card class="p-8 max-w-4xl mx-auto bg-white shadow-md rounded-lg">
             <!-- Page Title -->
             <h1 class="text-3xl font-semibold text-gray-800 mb-6">Productie Dashboard</h1>
@@ -61,15 +61,15 @@
                 />
 
                 <div class="flex gap-4">
-                    <button 
+                    <button
                         v-if="order.shipping_method === 'shipping'"
-                        class="btn-secondary text-xl" 
+                        class="btn-secondary text-xl"
                         @click="printLabel"
                     >
                         Print Label
                     </button>
-                    <button 
-                        class="btn-secondary text-xl" 
+                    <button
+                        class="btn-secondary text-xl"
                         @click="printPakbon"
                     >
                         Print Pakbon
