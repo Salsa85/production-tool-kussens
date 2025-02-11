@@ -45,6 +45,7 @@
                     min="1"
                     placeholder="Aantal colli"
                 />
+
                 <div class="flex gap-4">
                     <button v-if="shipping_method !== 'pickup'" class="btn-secondary text-xl" @click="printLabel">Print Label</button>
                     <button class="btn-secondary text-xl" @click="printPakbon">Print Pakbon</button>
@@ -73,7 +74,7 @@ export default {
             loading: false,
             searched: false,
             colli: 1,
-            shipping: null,
+            shipping_method: null,
         };
     },
     methods: {
@@ -117,6 +118,7 @@ export default {
                     error.response?.data?.message || 'Fout bij het ophalen van labels.';
             }
         },
+
         printPakbon() {
             if (this.order) {
                 const url = `/nova-vendor/production/orders/${this.order.id}/pdf`;

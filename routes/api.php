@@ -20,18 +20,17 @@ use Illuminate\Support\Facades\Storage;
 */
 
  Route::get('/orders/{orderNumber}', function ($orderNumber) {
+    $order = Order::where('id', $orderNumber)->first();
 
-     $order = Order::where('id', $orderNumber)->first();
+    if (!$order) {
+        return response()->json([
+            'message' => 'Order not found.',
+        ], 404);
+    }
 
-     if (!$order) {
-         return response()->json([
-             'message' => 'Order not found.',
-         ], 404);
-     }
-
-     return response()->json([
-         'order' => $order,
-     ]);
+    return response()->json([
+        'order' => $order,
+    ]);
  });
 
 Route::get('/orders/{orderNumber}/pdf', function ($orderNumber) {
