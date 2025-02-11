@@ -46,7 +46,7 @@
                     placeholder="Aantal colli"
                 />
                 <div class="flex gap-4">
-                    <button v-if="shipping !== 'pickup'" class="btn-secondary text-xl" @click="printLabel">Print Label</button>
+                    <button v-if="shipping_method !== 'pickup'" class="btn-secondary text-xl" @click="printLabel">Print Label</button>
                     <button class="btn-secondary text-xl" @click="printPakbon">Print Pakbon</button>
                 </div>
             </div>
