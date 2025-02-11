@@ -36,6 +36,16 @@
 
             <!-- Order Found Section -->
             <div v-if="order" class="border-t py-6">
+                <!-- Debug information -->
+                <div class="mb-4 p-4 bg-gray-100 rounded">
+                    <p class="text-sm font-mono">
+                        Shipping Method: {{ order.shipping_method }}
+                    </p>
+                    <p class="text-sm font-mono">
+                        Raw Order Data: {{ JSON.stringify(order, null, 2) }}
+                    </p>
+                </div>
+
                 <label for="colli" class="block text-gray-700 font-bold mb-2">Aantal colli:</label>
                 <input
                     id="colli"
