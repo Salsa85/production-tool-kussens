@@ -99,8 +99,18 @@ export default {
                 const response = await Nova.request().get(
                     `/nova-vendor/production/orders/${this.orderNumber}`
                 );
+                
+                // Add debug logging
+                console.log('API Response:', response.data);
+                
                 this.order = response.data.order;
-                console.log('Fetched order:', this.order);
+                
+                // Verify shipping method
+                console.log('Shipping Method:', this.order.shipping_method);
+                
+                if (!this.order.shipping_method) {
+                    console.warn('No shipping method found for order:', this.order);
+                }
 
             } catch (error) {
                 console.error('Error fetching order:', error);
